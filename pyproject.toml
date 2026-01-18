@@ -1,0 +1,51 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+sources = ["src"]
+
+[project]
+name = "aurora"
+version = "0.1.0"
+description = "Perplexity AI API wrapper with FastAPI and Gradio"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [{name = "Jayson", email = "jsoncp@proton.me"}]
+dependencies = [
+    "perplexityai>=0.22.3",
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "pydantic>=2.5.0",
+    "gradio>=4.19.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "mypy>=1.7.0",
+    "ruff>=0.1.8",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+lint.select = ["E", "F", "W", "I", "N", "UP"]
+lint.ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["perplexity.*"]
+ignore_missing_imports = true
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["aurora.client"]
+ignore_errors = true
